@@ -1,11 +1,33 @@
-let notes = ['C4', 'CS4', 'D4', 'DS4', 'E4', 'F4', 'FS4', 'G4', 'GS4', 'A4', 'AS4', 'B4', 
-'C5', 'CS5', 'D5', 'DS5', 'E5', 'F5'];
-
-loadNotes(notes);
 
 let notePressedColor = "gray"
 let noteDefaultColor = ""
 let currentOctave = 4;
+
+let notes = ['C4', 'CS4', 'D4', 'DS4', 'E4', 'F4', 'FS4', 'G4', 'GS4', 'A4', 'AS4', 'B4', 
+'C5', 'CS5', 'D5', 'DS5', 'E5', 'F5'];
+
+let notePressed = {
+    C1: false,
+    CS1: false,
+    D1: false,
+    DS1: false,
+    E1: false,
+    F1: false,
+    FS1: false,
+    G1: false,
+    GS1: false,
+    A1: false,
+    AS1: false,
+    B1: false,
+    C2: false,
+    CS2: false,
+    D2: false,
+    DS2: false,
+    E2: false,
+    F2: false 
+}
+
+loadNotes(notes);
 
 function loadNotes(notes) {
     for(let note of notes) {
@@ -14,8 +36,89 @@ function loadNotes(notes) {
 
 }
 
+/*
+when key is up, default val for any notePressed is false.
+when key is pressed and note is played, notePressed will now be true
+sound only plays when sound is NOT pressed so !notePressed
+
+*/
+
 function playNote(note, currentOctave) {
-    createjs.Sound.play(`${note + currentOctave}`);
+
+    if(!notePressed[`${note + (currentOctave - 3)}`]) {
+        createjs.Sound.play(`${note + currentOctave}`);
+        switchPress(note, currentOctave, true);
+    }
+    
+}
+
+/* 
+create a function that takes note name and octave as parameter and turns that 
+notePressed on or off depending on what it is passed.
+*/
+
+function switchPress(note, currentOctave, desiredState){
+    console.log(`key switched to ${desiredState}`);
+    notePressed[`${note + (currentOctave - 3)}`] = desiredState;
+}
+
+function switchPressFalse(key) {
+    switch(key) {
+        case 'KeyA':
+            switchPress('C', currentOctave, false);
+            break;
+        case 'KeyW':
+            switchPress('CS', currentOctave, false);
+            break;
+        case 'KeyS':
+            switchPress('D', currentOctave, false);
+            break;
+        case 'KeyE':
+            switchPress('DS', currentOctave, false);
+            break;
+        case 'KeyD':
+            switchPress('E', currentOctave, false);
+            break;
+        case 'KeyF':
+            switchPress('F', currentOctave, false);
+            break;  
+        case 'KeyT':
+            switchPress('FS', currentOctave, false);
+            break;
+        case 'KeyG':
+            switchPress('G', currentOctave, false);
+            break;
+        case 'KeyY':
+            switchPress('GS', currentOctave, false);
+            break;
+        case 'KeyH':
+            switchPress('A', currentOctave, false);
+            break;
+        case 'KeyU':
+            switchPress('AS', currentOctave, false);
+            break;
+        case 'KeyJ':
+            switchPress('B', currentOctave, false);
+            break;
+        case 'KeyK':
+            switchPress('C', currentOctave + 1, false);
+            break;
+        case 'KeyO':
+            switchPress('CS', currentOctave + 1, false);
+            break;
+        case 'KeyL':
+            switchPress('D', currentOctave + 1, false);
+            break;
+        case 'KeyP':
+            switchPress('DS', currentOctave + 1, false);
+            break;
+        case 'Semicolon':
+            switchPress('E', currentOctave + 1, false);
+            break;
+        case 'Quote':
+            switchPress('CS', currentOctave + 1, false);
+            break;
+    }
 }
 
 
@@ -97,6 +200,8 @@ function interpretKeytoNote(key) {
         
     }
 }
+
+
 
 function keyTappedNoteColor(note, octave, color) {
     
@@ -246,7 +351,6 @@ window.addEventListener('load', (event) => {
 
 window.addEventListener('keypress', (event) => {
     console.log(event.code);
-
     interpretKeytoNote(event.code);
     
 });
@@ -254,8 +358,9 @@ window.addEventListener('keypress', (event) => {
 
 
 window.addEventListener('keyup', (event) => {
-    
+
     console.log(event.code);
     toDefaultColor(event.code); 
+    switchPressFalse(event.code);
     
 });
