@@ -1,11 +1,11 @@
-/* Neon Keys 1.2.1 */
+/* Neon Keys 1.3.0 */
 
 
 let notePressedColor = "gray"
 let noteDefaultColor = ""
 let currentOctave = 4;
 
-let notes = [ 'C0', 'CS0', 'D0', 'DS0', 'E0', 'F0', 'FS0', 'G0', 'GS0', 'A0', 'AS0', 'B0', 
+let notes = [  
               'C1', 'CS1', 'D1', 'DS1', 'E1', 'F1', 'FS1', 'G1', 'GS1', 'A1', 'AS1', 'B1',
               'C2', 'CS2', 'D2', 'DS2', 'E2', 'F2', 'FS2', 'G2', 'GS2', 'A2', 'AS2', 'B2', 
               'C3', 'CS3', 'D3', 'DS3', 'E3', 'F3', 'FS3', 'G3', 'GS3', 'A3', 'AS3', 'B3',
@@ -36,6 +36,71 @@ let notePressed = {
     E2o: false,
     F2o: false 
 }
+
+window.addEventListener('load', (event) => {
+
+    let keys = document.querySelectorAll('.key')
+    
+    for(let key of keys){
+        key.onmousedown = function (event) {
+            noteClickedOnScreen(event);
+        }
+        key.onmouseup = function (event) {
+
+          
+            switch(event.target.id) {
+                case 'C2':
+                    switchPress('C', currentOctave + 1, false);
+                    break;
+                case 'CS2':
+                    switchPress('CS', currentOctave + 1, false);
+                    break;
+                case 'D2':
+                    switchPress('D', currentOctave + 1, false);
+                    break;
+                case 'DS2':
+                    switchPress('DS', currentOctave + 1, false);
+                    break;
+                case 'E2':
+                    switchPress('E', currentOctave + 1, false);
+                    break;
+                case 'F2':
+                    switchPress('F', currentOctave + 1, false);
+                    break;
+                default:
+                    switchPress(event.target.id, currentOctave, false);
+                    break;
+
+            }
+
+        }
+           
+        
+
+
+    }
+
+});
+
+
+
+window.addEventListener('keypress', (event) => {
+    console.log(event.code);
+    interpretKeytoNote(event.code);
+    changeOctave(event.code);
+    
+    
+});
+
+
+
+window.addEventListener('keyup', (event) => {
+
+    console.log(event.code);
+    toDefaultColor(event.code); 
+    switchPressFalse(event.code);
+    
+});
 
 loadNotes(notes);
 
@@ -136,75 +201,75 @@ function interpretKeytoNote(key) {
     switch(key) {
         case 'KeyA':
             playNote('C', currentOctave);
-            keyTappedNoteColor('C', currentOctave, notePressedColor);
+            changeRenderedKeyColor('C', currentOctave, notePressedColor);
             break;
         case 'KeyW':
             playNote('CS', currentOctave);
-            keyTappedNoteColor('CS', currentOctave, notePressedColor);
+            changeRenderedKeyColor('CS', currentOctave, notePressedColor);
             break;
         case 'KeyS':
             playNote('D', currentOctave);
-            keyTappedNoteColor('D', currentOctave, notePressedColor);
+            changeRenderedKeyColor('D', currentOctave, notePressedColor);
             break;
         case 'KeyE':
             playNote('DS', currentOctave);
-            keyTappedNoteColor('DS', currentOctave, notePressedColor);
+            changeRenderedKeyColor('DS', currentOctave, notePressedColor);
             break;
         case 'KeyD':
             playNote('E', currentOctave);
-            keyTappedNoteColor('E', currentOctave, notePressedColor);
+            changeRenderedKeyColor('E', currentOctave, notePressedColor);
             break;
         case 'KeyF':
             playNote('F', currentOctave);
-            keyTappedNoteColor('F', currentOctave, notePressedColor);
+            changeRenderedKeyColor('F', currentOctave, notePressedColor);
             break;  
         case 'KeyT':
             playNote('FS', currentOctave);
-            keyTappedNoteColor('FS', currentOctave, notePressedColor);
+            changeRenderedKeyColor('FS', currentOctave, notePressedColor);
             break;
         case 'KeyG':
             playNote('G', currentOctave);
-            keyTappedNoteColor('G', currentOctave, notePressedColor);
+            changeRenderedKeyColor('G', currentOctave, notePressedColor);
             break;
         case 'KeyY':
             playNote('GS', currentOctave);
-            keyTappedNoteColor('GS', currentOctave, notePressedColor);
+            changeRenderedKeyColor('GS', currentOctave, notePressedColor);
             break;
         case 'KeyH':
             playNote('A', currentOctave);
-            keyTappedNoteColor('A', currentOctave, notePressedColor);
+            changeRenderedKeyColor('A', currentOctave, notePressedColor);
             break;
         case 'KeyU':
             playNote('AS', currentOctave);
-            keyTappedNoteColor('AS', currentOctave, notePressedColor);
+            changeRenderedKeyColor('AS', currentOctave, notePressedColor);
             break;
         case 'KeyJ':
             playNote('B', currentOctave);
-            keyTappedNoteColor('B', currentOctave, notePressedColor);
+            changeRenderedKeyColor('B', currentOctave, notePressedColor);
             break;
         case 'KeyK':
             playNote('C', currentOctave + 1);
-            keyTappedNoteColor('C', currentOctave + 1, notePressedColor);
+            changeRenderedKeyColor('C', currentOctave + 1, notePressedColor);
             break;
         case 'KeyO':
             playNote('CS', currentOctave + 1);
-            keyTappedNoteColor('CS', currentOctave + 1, notePressedColor);
+            changeRenderedKeyColor('CS', currentOctave + 1, notePressedColor);
             break;
         case 'KeyL':
             playNote('D', currentOctave + 1);
-            keyTappedNoteColor('D', currentOctave + 1, notePressedColor);
+            changeRenderedKeyColor('D', currentOctave + 1, notePressedColor);
             break;
         case 'KeyP':
             playNote('DS', currentOctave + 1);
-            keyTappedNoteColor('DS', currentOctave + 1, notePressedColor);
+            changeRenderedKeyColor('DS', currentOctave + 1, notePressedColor);
             break;
         case 'Semicolon':
             playNote('E', currentOctave + 1);
-            keyTappedNoteColor('E', currentOctave + 1, notePressedColor);
+            changeRenderedKeyColor('E', currentOctave + 1, notePressedColor);
             break;
         case 'Quote':
             playNote('F', currentOctave + 1);
-            keyTappedNoteColor('F', currentOctave + 1, notePressedColor);
+            changeRenderedKeyColor('F', currentOctave + 1, notePressedColor);
             break;
         
     }
@@ -212,7 +277,7 @@ function interpretKeytoNote(key) {
 
 
 
-function keyTappedNoteColor(note, octave, color) {
+function changeRenderedKeyColor(note, octave, color) {
     
     if (octave == currentOctave) {
         document.querySelector(`#${note}`).style.backgroundColor = color;
@@ -226,58 +291,58 @@ function toDefaultColor(key) {
 
     switch(key) {
         case 'KeyA':
-            keyTappedNoteColor('C', currentOctave, noteDefaultColor);
+            changeRenderedKeyColor('C', currentOctave, noteDefaultColor);
             break;
         case 'KeyW':
-            keyTappedNoteColor('CS', currentOctave, noteDefaultColor);
+            changeRenderedKeyColor('CS', currentOctave, noteDefaultColor);
             break;
         case 'KeyS':
-            keyTappedNoteColor('D', currentOctave, noteDefaultColor);
+            changeRenderedKeyColor('D', currentOctave, noteDefaultColor);
             break;
         case 'KeyE':
-            keyTappedNoteColor('DS', currentOctave, noteDefaultColor);
+            changeRenderedKeyColor('DS', currentOctave, noteDefaultColor);
             break;
         case 'KeyD':
-            keyTappedNoteColor('E', currentOctave, noteDefaultColor);
+            changeRenderedKeyColor('E', currentOctave, noteDefaultColor);
             break;
         case 'KeyF':
-            keyTappedNoteColor('F', currentOctave, noteDefaultColor);
+            changeRenderedKeyColor('F', currentOctave, noteDefaultColor);
             break;  
         case 'KeyT':
-            keyTappedNoteColor('FS', currentOctave, noteDefaultColor);
+            changeRenderedKeyColor('FS', currentOctave, noteDefaultColor);
             break;
         case 'KeyG':
-            keyTappedNoteColor('G', currentOctave, noteDefaultColor);
+            changeRenderedKeyColor('G', currentOctave, noteDefaultColor);
             break;
         case 'KeyY':
-            keyTappedNoteColor('GS', currentOctave, noteDefaultColor);
+            changeRenderedKeyColor('GS', currentOctave, noteDefaultColor);
             break;
         case 'KeyH':
-            keyTappedNoteColor('A', currentOctave, noteDefaultColor);
+            changeRenderedKeyColor('A', currentOctave, noteDefaultColor);
             break;
         case 'KeyU':
-            keyTappedNoteColor('AS', currentOctave, noteDefaultColor);
+            changeRenderedKeyColor('AS', currentOctave, noteDefaultColor);
             break;
         case 'KeyJ':
-            keyTappedNoteColor('B', currentOctave, noteDefaultColor);
+            changeRenderedKeyColor('B', currentOctave, noteDefaultColor);
             break;
         case 'KeyK':
-            keyTappedNoteColor('C', currentOctave + 1, noteDefaultColor);
+            changeRenderedKeyColor('C', currentOctave + 1, noteDefaultColor);
             break;
         case 'KeyO':
-            keyTappedNoteColor('CS', currentOctave + 1, noteDefaultColor);
+            changeRenderedKeyColor('CS', currentOctave + 1, noteDefaultColor);
             break;
         case 'KeyL':
-            keyTappedNoteColor('D', currentOctave + 1, noteDefaultColor);
+            changeRenderedKeyColor('D', currentOctave + 1, noteDefaultColor);
             break;
         case 'KeyP':
-            keyTappedNoteColor('DS', currentOctave + 1, noteDefaultColor);
+            changeRenderedKeyColor('DS', currentOctave + 1, noteDefaultColor);
             break;
         case 'Semicolon':
-            keyTappedNoteColor('E', currentOctave + 1, noteDefaultColor);
+            changeRenderedKeyColor('E', currentOctave + 1, noteDefaultColor);
             break;
         case 'Quote':
-            keyTappedNoteColor('F', currentOctave + 1, noteDefaultColor);
+            changeRenderedKeyColor('F', currentOctave + 1, noteDefaultColor);
             break;
     }
 }
@@ -344,65 +409,12 @@ function noteClickedOnScreen(event) {
 
 }
 
-
-window.addEventListener('load', (event) => {
-
-    let keys = document.querySelectorAll('.key')
-    
-    for(let key of keys){
-        key.onmousedown = function (event) {
-            noteClickedOnScreen(event);
-        }
-        key.onmouseup = function (event) {
-
-          
-            switch(event.target.id) {
-                case 'C2':
-                    switchPress('C', currentOctave + 1, false);
-                    break;
-                case 'CS2':
-                    switchPress('CS', currentOctave + 1, false);
-                    break;
-                case 'D2':
-                    switchPress('D', currentOctave + 1, false);
-                    break;
-                case 'DS2':
-                    switchPress('DS', currentOctave + 1, false);
-                    break;
-                case 'E2':
-                    switchPress('E', currentOctave + 1, false);
-                    break;
-                case 'F2':
-                    switchPress('F', currentOctave + 1, false);
-                    break;
-                default:
-                    switchPress(event.target.id, currentOctave, false);
-                    break;
-
-            }
-
-        }
-           
-        
-
-
+function changeOctave(key){
+    if(key == 'KeyZ' && currentOctave != 1) {
+        currentOctave -= 1;
+    } else if (key == 'KeyX' && currentOctave != 7){
+        currentOctave += 1;
     }
-
-});
-
-
-window.addEventListener('keypress', (event) => {
-    console.log(event.code);
-    interpretKeytoNote(event.code);
-    
-});
+}
 
 
-
-window.addEventListener('keyup', (event) => {
-
-    console.log(event.code);
-    toDefaultColor(event.code); 
-    switchPressFalse(event.code);
-    
-});
