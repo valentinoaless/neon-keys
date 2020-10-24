@@ -1,30 +1,40 @@
+/* Neon Keys 1.2.1 */
+
 
 let notePressedColor = "gray"
 let noteDefaultColor = ""
 let currentOctave = 4;
 
-let notes = ['C4', 'CS4', 'D4', 'DS4', 'E4', 'F4', 'FS4', 'G4', 'GS4', 'A4', 'AS4', 'B4', 
-'C5', 'CS5', 'D5', 'DS5', 'E5', 'F5'];
+let notes = [ 'C0', 'CS0', 'D0', 'DS0', 'E0', 'F0', 'FS0', 'G0', 'GS0', 'A0', 'AS0', 'B0', 
+              'C1', 'CS1', 'D1', 'DS1', 'E1', 'F1', 'FS1', 'G1', 'GS1', 'A1', 'AS1', 'B1',
+              'C2', 'CS2', 'D2', 'DS2', 'E2', 'F2', 'FS2', 'G2', 'GS2', 'A2', 'AS2', 'B2', 
+              'C3', 'CS3', 'D3', 'DS3', 'E3', 'F3', 'FS3', 'G3', 'GS3', 'A3', 'AS3', 'B3',
+              'C4', 'CS4', 'D4', 'DS4', 'E4', 'F4', 'FS4', 'G4', 'GS4', 'A4', 'AS4', 'B4', 
+              'C5', 'CS5', 'D5', 'DS5', 'E5', 'F5', 'FS5', 'G5', 'GS5', 'A5', 'AS5', 'B5',
+              'C6', 'CS6', 'D6', 'DS6', 'E6', 'F6', 'FS6', 'G6', 'GS6', 'A6', 'AS6', 'B6', 
+              'C7', 'CS7', 'D7', 'DS7', 'E7', 'F7', 'FS7', 'G7', 'GS7', 'A7', 'AS7', 'B7',
+              'C8'
+            ];
 
 let notePressed = {
-    C1: false,
-    CS1: false,
-    D1: false,
-    DS1: false,
-    E1: false,
-    F1: false,
-    FS1: false,
-    G1: false,
-    GS1: false,
-    A1: false,
-    AS1: false,
-    B1: false,
-    C2: false,
-    CS2: false,
-    D2: false,
-    DS2: false,
-    E2: false,
-    F2: false 
+    C1o: false,
+    CS1o: false,
+    D1o: false,
+    DS1o: false,
+    E1o: false,
+    F1o: false,
+    FS1o: false,
+    G1o: false,
+    GS1o: false,
+    A1o: false,
+    AS1o: false,
+    B1o: false,
+    C2o: false,
+    CS2o: false,
+    D2o: false,
+    DS2o: false,
+    E2o: false,
+    F2o: false 
 }
 
 loadNotes(notes);
@@ -40,12 +50,11 @@ function loadNotes(notes) {
 when key is up, default val for any notePressed is false.
 when key is pressed and note is played, notePressed will now be true
 sound only plays when sound is NOT pressed so !notePressed
-
 */
 
 function playNote(note, currentOctave) {
 
-    if(!notePressed[`${note + (currentOctave - 3)}`]) {
+    if(!notePressed[`${note + (currentOctave - 3)}o`]) {
         createjs.Sound.play(`${note + currentOctave}`);
         switchPress(note, currentOctave, true);
     }
@@ -59,7 +68,7 @@ notePressed on or off depending on what it is passed.
 
 function switchPress(note, currentOctave, desiredState){
     console.log(`key switched to ${desiredState}`);
-    notePressed[`${note + (currentOctave - 3)}`] = desiredState;
+    notePressed[`${note + (currentOctave - 3)}o`] = desiredState;
 }
 
 function switchPressFalse(key) {
@@ -116,7 +125,7 @@ function switchPressFalse(key) {
             switchPress('E', currentOctave + 1, false);
             break;
         case 'Quote':
-            switchPress('CS', currentOctave + 1, false);
+            switchPress('F', currentOctave + 1, false);
             break;
     }
 }
@@ -344,6 +353,39 @@ window.addEventListener('load', (event) => {
         key.onmousedown = function (event) {
             noteClickedOnScreen(event);
         }
+        key.onmouseup = function (event) {
+
+          
+            switch(event.target.id) {
+                case 'C2':
+                    switchPress('C', currentOctave + 1, false);
+                    break;
+                case 'CS2':
+                    switchPress('CS', currentOctave + 1, false);
+                    break;
+                case 'D2':
+                    switchPress('D', currentOctave + 1, false);
+                    break;
+                case 'DS2':
+                    switchPress('DS', currentOctave + 1, false);
+                    break;
+                case 'E2':
+                    switchPress('E', currentOctave + 1, false);
+                    break;
+                case 'F2':
+                    switchPress('F', currentOctave + 1, false);
+                    break;
+                default:
+                    switchPress(event.target.id, currentOctave, false);
+                    break;
+
+            }
+
+        }
+           
+        
+
+
     }
 
 });
