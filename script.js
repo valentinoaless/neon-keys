@@ -86,8 +86,8 @@ window.addEventListener('load', (event) => {
 
 window.addEventListener('keypress', (event) => {
     console.log(event.code);
-    interpretKeytoNote(event.code);
-    changeOctave(event.code);
+    keyToAction(event);
+    changeOctave(event);
     
     
 });
@@ -192,11 +192,14 @@ function switchPressFalse(key) {
         case 'Quote':
             switchPress('F', currentOctave + 1, false);
             break;
+        
     }
 }
 
 
-function interpretKeytoNote(key) {
+function keyToAction(event) {
+
+    key = event.code;
 
     switch(key) {
         case 'KeyA':
@@ -271,11 +274,41 @@ function interpretKeytoNote(key) {
             playNote('F', currentOctave + 1);
             changeRenderedKeyColor('F', currentOctave + 1, notePressedColor);
             break;
+        case 'KeyX':
+            changeOctave(event);
+            changeRenderedBtnColor('.oct-plus','active');
+            break;
+        case 'KeyZ':
+            changeOctave(event);
+            changeRenderedBtnColor('.oct-minus','active');
+            break;
+        case 'KeyN':
+            checkBox('#toggle-note-labels');
+            toggleNoteLabels(document.querySelector('#toggle-note-labels').checked);
+            break;
+        case 'KeyM':
+            checkBox('#toggle-kb-labels');
+            toggleKeyGuideLabels(document.querySelector('#toggle-kb-labels').checked);
+            break;
+
+            
         
     }
 }
 
+// pass 'default' to return btn to normal, 'active' to highlight
 
+function changeRenderedBtnColor(btnClass, action="") {
+
+    if(action == "active") {
+        document.querySelector(btnClass).style.backgroundColor = "gray";
+    } else if(action == "default") {
+        document.querySelector(btnClass).style.backgroundColor = "";
+    }
+
+
+
+}
 
 function changeRenderedKeyColor(note, octave, color) {
     
@@ -284,8 +317,18 @@ function changeRenderedKeyColor(note, octave, color) {
     } else { 
         document.querySelector(`#${note}2`).style.backgroundColor = color;
     }
-
 }
+
+function checkBox(selector) {
+
+    if(document.querySelector(`${selector}`).checked) {
+        document.querySelector(`${selector}`).checked = false;
+    } else if(!document.querySelector(`${selector}`).checked) {
+        document.querySelector(`${selector}`).checked = true;
+    }
+} 
+
+
 
 function toDefaultColor(key) {
 
@@ -343,6 +386,12 @@ function toDefaultColor(key) {
             break;
         case 'Quote':
             changeRenderedKeyColor('F', currentOctave + 1, noteDefaultColor);
+            break;
+        case 'KeyX':
+            changeRenderedBtnColor('.oct-plus','default');
+            break;
+        case 'KeyZ':
+            changeRenderedBtnColor('.oct-minus','default');
             break;
     }
 }
@@ -409,12 +458,78 @@ function noteClickedOnScreen(event) {
 
 }
 
-function changeOctave(key){
-    if(key == 'KeyZ' && currentOctave != 1) {
+function changeOctave(event, action=''){
+
+    if (event.type == 'click') {
+        if (action == '+' && currentOctave != 7) {
+            currentOctave += 1;
+        } else if (action == '-' && currentOctave != 1) {
+            currentOctave -= 1;
+        }
+    }
+
+    if(event.code == 'KeyZ' && currentOctave != 1) {
         currentOctave -= 1;
-    } else if (key == 'KeyX' && currentOctave != 7){
+    } else if (event.code == 'KeyX' && currentOctave != 7){
         currentOctave += 1;
     }
 }
 
+
+
+function toggleNoteLabels(targetChecked) {
+    noteLabels = document.querySelectorAll('.note-label');
+    console.log(noteLabels);
+    if(targetChecked) {
+        for(let noteLabel of noteLabels){
+            noteLabel.style.visibility = "visible";
+        }
+    } else {
+        for(let noteLabel of noteLabels){
+            noteLabel.style.visibility = "hidden";
+        }
+    }
+}
+
+function toggleKeyGuideLabels(targetChecked) {
+    keyLabels = document.querySelectorAll('.key-label');
+    navLabels = document.querySelectorAll('.np-nav');
+    console.log(keyLabels);
+    if(targetChecked) {
+        for(let keyLabel of keyLabels){
+            keyLabel.style.visibility = "visible";
+        }
+        for(let navLabel of navLabels){
+            navLabel.style.visibility = "visible"
+        }
+
+        
+    } else {
+        for(let keyLabel of keyLabels){
+            keyLabel.style.visibility = "hidden";
+        }
+        for(let navLabel of navLabels){
+            navLabel.style.visibility = "hidden";
+        }
+    }
+}
+
+
+
+document.querySelector('.oct-plus').onclick = function (event) {
+    changeOctave(event, '+')
+    console.log("increace octave pressed");
+}
+
+document.querySelector('.oct-minus').onclick = function (event) {
+    changeOctave(event, '-')
+}
+
+document.querySelector('#toggle-note-labels').onclick = function (event) {
+    toggleNoteLabels(event.target.checked)
+}
+
+document.querySelector('#toggle-kb-labels').onclick = function (event) {
+    toggleKeyGuideLabels(event.target.checked)
+}
 

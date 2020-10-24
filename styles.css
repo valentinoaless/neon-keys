@@ -1,5 +1,8 @@
 /* Neon Keys 1.3.0 */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+
 * {
+    font-family: 'Roboto Mono', monospace;
     margin: 0;
     padding: 0;
 }
@@ -9,8 +12,8 @@ body {
     height: 100%;
     display: flex;
     justify-content: center;
-    
-    
+    vertical-align: center;
+    flex-direction: column;
 }
 
 body, html {
@@ -19,25 +22,82 @@ body, html {
 }
 
 
+header {
+    display: flex;
+    justify-content: center;
+}
 
 header img {
     width: 1000px;
 }
 
-h1 {
-    color: rgb(179, 255, 0)
+
+
+#main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 500px;
+    width: 900px;
+    margin: 0 auto;
 }
 
-.piano {
-    /*background-color: rgb(212, 255, 0);*/
+#piano-play {
     width: 700px;
-    height: 300px;
-    position: absolute;
+    height: 70%;
+    position: relative;
     display: flex;
     justify-content: left;
-    margin-top: 400px;
-    padding-top: 30px;
     border-radius: 5px;
+}
+
+#piano-control {
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+#toggle {
+    width: 700px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.oct-ctrl-lb {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1em;
+    color: rgb(179, 255, 0);
+}
+
+.oct-control {
+    color: rgb(179, 255, 0);
+    font-size: 3em;
+    border: 2px solid rgb(179, 255, 0);
+    border-radius: 5px;
+    width: 70px;
+    min-width: 70px;
+    height: 70px;
+    min-height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+
+.oct-control:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.oct-control:active {
+    background-color: gray;
 }
 
 .white {
@@ -47,6 +107,73 @@ h1 {
     border: 2px solid rgb(179, 255, 0);
     border-radius: 5px;
 }
+
+.toggle-area {
+    color: #ddd;
+    font-size: 0.8em;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    width: 100%;
+}
+
+.toggle-check {
+    margin: 5px;
+}
+
+.container {
+    width: 200px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.container span {
+    margin-left: 10px;
+}
+
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.check-mark {
+    height: 15px;
+    width: 15px;
+    border:1px solid rgb(179, 255, 0);
+    border-radius: 3px;
+}
+
+.container:hover input ~ .check-mark {
+    background-color: #ccc;
+}
+
+.container input:checked ~ .check-mark {
+    background-color:rgb(179, 255, 0);
+}
+
+.check-mark:after {
+    content: "";
+    position: relative;
+    display: none;
+}
+
+.container input:checked ~ .check-mark:after {
+    display: block;
+}
+
+.container .check-mark:after {
+    width: 10px;
+    height: 10px;
+    background-color: rgb(179, 255, 0);
+    border-radius: 3px;
+ 
+  }
 
 .white:active {
     background-color: gray;
@@ -91,6 +218,73 @@ h1 {
 
 #DS2 {
     left: 79%;
+}
+
+.key span {
+    
+    height: 30px;
+    width: 30px;
+    pointer-events: none;
+    color: #bbb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.key span.w-key-name {
+    color: rgb(179, 255, 0);
+}
+
+.key span.w-note-name {
+    font-size: 1.4em;
+}
+
+.key span.b-key-name {
+    color: rgb(179, 255, 0);
+}
+
+.key span.b-note-name {
+    font-size: 1.2em;
+}
+
+.note-label {
+    visibility: hidden;
+}
+
+.key-label {
+    visibility: hidden;
+}
+
+#kbg-note-label-toggle {
+    position: relative;
+    left: -117px;
+    bottom: -20px;
+    font-size: 1.1em;
+    color: rgb(179, 255, 0);
+}
+
+#kbg-kb-guide-toggle {
+    position: relative;
+    left: -140px;
+    bottom: -20px;
+    font-size: 1.1em;
+    color: rgb(179, 255, 0);
+}
+
+.z-minus {
+    font-size: 1.1em;
+    color: rgb(179, 255, 0);
+}
+
+.np-nav {
+    visibility: hidden;
+}
+
+.key {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 @media (max-width: 768px) {
