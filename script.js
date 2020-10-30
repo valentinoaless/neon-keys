@@ -106,7 +106,7 @@ loadNotes(notes);
 
 function loadNotes(notes) {
     for(let note of notes) {
-        createjs.Sound.registerSound(`audio-files/${note}.wav`, `${note}`);
+        createjs.Sound.registerSound(`audio-files-mp3/${note}.mp3`, `${note}`);
     }
 
 }
